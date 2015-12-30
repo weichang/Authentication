@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  before_create :rand_token
+  
   has_secure_password
   
   validates :first_name , presence: true
@@ -7,5 +9,8 @@ class User < ActiveRecord::Base
   
   def to_s
      "#{first_name} #{last_name}"
+  end
+  def rand_token
+    self.token = SecureRandom.uuid
   end
 end

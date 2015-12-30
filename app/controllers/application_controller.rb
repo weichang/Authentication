@@ -20,4 +20,11 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def active?
+    user = User.find(session[:user_id])
+    if !user.is_active
+      redirect_to login_path
+    end
+  end
+  
 end

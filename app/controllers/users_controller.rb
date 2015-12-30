@@ -45,7 +45,17 @@ class UsersController < ApplicationController
     @user.destroy
     redirect_to users_url, notice: 'User was successfully destroyed.'
   end
-
+  def active
+    @user = User.find_by_token(params[:id])
+    if @user
+      @user.is_active = true
+      @user.save
+      session[:user_id] = @user.id
+      redirect_to root_path
+    else
+      redirect_to login_path
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
